@@ -133,7 +133,20 @@ struct NIMSessionParser {
             if let customObject = message.messageObject as? NIMCustomObject, let attachment = customObject.attachment {
                 messageDict["customMessageContent"] = attachment.encode()
             }
+        } else if message.messageType == NIMMessageType.file {
+           if let fileObject = message.messageObject as? NIMFileObject {
+                var messageObjectDict = [String: Any]()
+                messageDict["text"] = fileObject.displayName
+                messageObjectDict["url"] = fileObject.url
+                messageObjectDict["path"] = fileObject.path
+                messageObjectDict["coverUrl"] = ""
+                messageObjectDict["duration"] = Int(0)
+                messageObjectDict["width"] = Int(0)
+                messageObjectDict["height"] = Int(0)                
+                messageDict["messageObject"] = messageObjectDict
+            }
         }
+        
         
         return messageDict
     }
