@@ -214,6 +214,20 @@ class NIMSessionParser {
                     object.put("customMessageContent", customAttachment.toJson(false));
 
                     break;
+                case file:
+                    FileAttachment fileAttachment = (FileAttachment) message.getAttachment();
+
+                    JSONObject fileObject = new JSONObject();
+                    fileObject.put("url", fileAttachment.getUrl());
+                    fileObject.put("coverUrl", "");
+                    fileObject.put("path", fileAttachment.getPath());
+                    fileObject.put("duration", 0);
+                    fileObject.put("width", 0);
+                    fileObject.put("height", 0);
+
+                object.put("messageObject", fileObject);
+
+                    break;
                 default:
                     break;
             }
